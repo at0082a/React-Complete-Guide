@@ -10,7 +10,7 @@ function App(props) {
       {name: 'Manu', age: 30},
       {name: 'Steph', age: 23}
     ]
-  });
+  })  ;
 
   const switchNameHandler = () => {
     setData({
