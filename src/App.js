@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
+import Radium, {StyleRoot} from 'radium'
 import Person from "./components/Person"
 
 function App(props) {
@@ -21,9 +22,7 @@ function App(props) {
     });
 
     let newPerson = { ...data.persons[findPerson] }; 
-    // let newperson = { ...data.persons[findPerson] };
     newPerson.name = event.target.value;
-    console.log(newPerson.name);
     data.persons[findPerson] = newPerson;
     setData(prevState => {
       return {...prevState, ...data}
@@ -42,6 +41,19 @@ function App(props) {
   };
 
   let persons = null;
+  
+  const style = {
+    backgroundColor: 'green',
+    color: 'white',
+    font: 'inherit',
+    border: '1 px solid blue',
+    padding: '8px',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'lightgreen',
+      color: 'black'
+    }
+  };
 
   if (toggle) {
     persons = (
@@ -58,16 +70,34 @@ function App(props) {
         }
       </div>
     )
+    style.backgroundColor = 'red'
+    style[':hover'] = {
+      backgroundColor: 'salmon',
+      color: 'black'
+    }
+  }
+
+  const classes = [];
+
+  if (data.persons.length <= 2) {
+    console.log('reddddd')
+    classes.push('red')
+  }
+
+  if (data.persons.length <= 1) {
+    console.log('booolldd')
+    classes.push('italic')
   }
 
   return (
-    <div className="App">
-      <h1>Hi I am a react app</h1>
-      {/* <button onClick={switchNameHandler}>Switch Name</button> */}
-      <button onClick={switchToggle}>Toggle Peeps</button>
-      {persons}
-    </div>
+    <StyleRoot>
+      <div className="App">
+        <h1 className={classes.join(' ')}>Hi I am a react app</h1>
+        <button style={style} onClick={switchToggle}>Toggle Peeps</button>
+        {persons}
+      </div>
+    </StyleRoot>
   );
 }
 
-export default App;
+export default Radium(App);
