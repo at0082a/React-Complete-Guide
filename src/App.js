@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import Radium, {StyleRoot} from 'radium'
-import Person from "./components/Person"
+import Person from "./components/Person";
 
 function App(props) {
   
@@ -90,14 +89,12 @@ function App(props) {
   }
 
   return (
-    <StyleRoot>
       <div className="App">
         <h1 className={classes.join(' ')}>Hi I am a react app</h1>
         <button style={style} onClick={switchToggle}>Toggle Peeps</button>
         {persons}
       </div>
-    </StyleRoot>
   );
 }
 
-export default Radium(App);
+export default App;
