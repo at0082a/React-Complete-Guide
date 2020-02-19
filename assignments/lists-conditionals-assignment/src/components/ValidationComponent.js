@@ -1,7 +1,7 @@
 import React from 'react';
 
 const validate = (props) => {
-  let result = null
+  let result = null;
 
   if (props.length < 5) {
     result = 'text is too short';

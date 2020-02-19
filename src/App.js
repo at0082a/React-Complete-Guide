@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
-import Person from "./components/Person";
+import styled from 'styled-components';
+import Persons from './components/Persons';
 
 function App(props) {
   
@@ -28,6 +29,19 @@ function App(props) {
     });
   };
 
+  const StyledButton = styled.button`
+    background-color: ${ props => props.alt ? 'red' : 'green'};
+    color: white;
+    font: inherit;
+    border: 1 px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    &:hover {
+      background-color: ${ props => props.alt ? 'salmon' : 'lightgreen'},
+      color: black
+    }
+  `;
+
   const switchToggle = () => {
     setToggle(!toggle);
   };
@@ -40,58 +54,35 @@ function App(props) {
   };
 
   let persons = null;
-  
-  const style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1 px solid blue',
-    padding: '8px',
-    cursor: 'pointer',
-    ':hover': {
-      backgroundColor: 'lightgreen',
-      color: 'black'
-    }
-  };
 
   if (toggle) {
     persons = (
       <div>
-        {data.persons.map((person, index) => {
-          return <Person
-              key={person.id}
-              name={person.name}
-              age={person.age}
-              click={ () => deletePerson(index)}
-              changed={ (event) => switchNameHandler(event, person.id)}
-            />
-          })  
-        }
+        <Persons
+          delete={deletePerson}
+          changed={switchNameHandler}
+          people={data.persons}
+        />
       </div>
     )
-    style.backgroundColor = 'red'
-    style[':hover'] = {
-      backgroundColor: 'salmon',
-      color: 'black'
-    }
   }
 
   const classes = [];
 
   if (data.persons.length <= 2) {
-    console.log('reddddd')
     classes.push('red')
   }
 
   if (data.persons.length <= 1) {
-    console.log('booolldd')
     classes.push('italic')
   }
 
   return (
       <div className="App">
         <h1 className={classes.join(' ')}>Hi I am a react app</h1>
-        <button style={style} onClick={switchToggle}>Toggle Peeps</button>
+        <StyledButton alt={toggle} onClick={switchToggle}>
+          Toggle Peeps
+        </StyledButton>
         {persons}
       </div>
   );
